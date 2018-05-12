@@ -1,0 +1,15 @@
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\parkingSimulatorWebAPI.deps.json
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\parkingSimulatorWebAPI.runtimeconfig.json
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\parkingSimulatorWebAPI.runtimeconfig.dev.json
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\parkingSimulatorWebAPI.dll
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\parkingSimulatorWebAPI.pdb
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.csprojResolveAssemblyReference.cache
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.csproj.CoreCompileInputs.cache
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.AssemblyInfoInputs.cache
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.AssemblyInfo.cs
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.dll
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.pdb
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\ParkingClassLibrary.dll
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\ParkingClassLibrary.pdb
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\obj\Debug\netcoreapp2.0\parkingSimulatorWebAPI.csproj.CopyComplete
+C:\Users\beekeeper\Documents\GitHub\parkingSimulatorWebAPI\parkingSimulatorWebAPI\bin\Debug\netcoreapp2.0\NLog.config
