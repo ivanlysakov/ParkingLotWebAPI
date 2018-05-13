@@ -14,15 +14,23 @@ namespace ParkingClassLibrary
         public static int globalCarID;
 
         //виды авто
-        public enum CarTypes { Undefined, Passanger, Truck, Bus, Moto }
+        [Flags]
+        public enum CarTypes
+        {
+            Undefined,
+            Passanger,
+            Truck,
+            Bus,
+            Moto
+
+        }
         public Car(int balance, CarTypes type)
 
         {
             this.ID = Interlocked.Increment(ref globalCarID);
             this.Balance = balance;
             this.TypeofCar = type;
-
-
+            
         }
     }
 }
