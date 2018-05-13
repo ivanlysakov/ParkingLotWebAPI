@@ -25,7 +25,8 @@ namespace parkingSimulatorWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddScoped<ParkingService>();
+            services.AddSingleton<ParkingService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

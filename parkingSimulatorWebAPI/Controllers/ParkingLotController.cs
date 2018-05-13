@@ -10,10 +10,11 @@ using Microsoft.Extensions.Logging;
 namespace parkingSimulatorWebAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/ParkingLot")]
+   
     public class ParkingLotController : Controller
     {
-        public ParkingService service { get; set; }
+        public ParkingService service { get; set; } = ParkingService.Instance;
+        
         private readonly ILogger<ParkingLotController> _logger;
 
         public ParkingLotController(ILogger<ParkingLotController> logger, ParkingService service)
@@ -27,42 +28,61 @@ namespace parkingSimulatorWebAPI.Controllers
             _logger.LogInformation("Index page says hello");
             return View();
         }
-        
-        //public ParkingLotController(ParkingService service)
-        //{
-           
-        //}
+                            
 
-        // GET: api/ParkingLot
+        [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
-        public int GetParkingSpaces()
+        public JsonResult GetParkingFreeSpaces()
         {
-            return service.ShowParkingSpace();
+            return Json(new {free_spaces = service.ShowParkingSpace()});
 
         }
-        //// GET: api/ParkingLot/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+
+        [Route("api/[controller]/ParkingOccupiedSpaces")]
+        [HttpGet]
+        public JsonResult GetParkingOccupiedSpaces()
+        {
+            return Json(new { occupied_spaces = service.Cars.Count });
+        }
+               
+
+        // GET: api/ParkingLot/Balance
+        [Route("api/[controller]/ParkingBalance")]
+        [HttpGet]
+        public JsonResult GetParkingBalance()
+        {
+            return Json(new { time = DateTime.Now.ToString("g"), parking_balance = service.ShowParkingBalance() });
+        }
+
+        // POST: api/CarAdd
+        [Route("api/[controller]/AddCar")]
+        [HttpPost]
+        public JsonResult PostNewCar(string type, int balance )
+        {
+            try
+            {
+                Car.CarTypes _type = (Car.CarTypes)Enum.Parse(typeof(Car.CarTypes), type);
+                Car car = new Car(balance, _type);
+                service.AddCar(car);
+                return Json(Ok());
+            }
+            catch 
+            {
+
+                return Json(BadRequest());
+            }
+            
+            
+        }
         
-        //// POST: api/ParkingLot
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-        
-        //// PUT: api/ParkingLot/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-        
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // GET api/values/5
+        [Route("api/[controller]/ShowCarBalance/{id}")]
+        [HttpGet("{id}")]
+        public JsonResult GetCarBalance(int id)
+        {
+            return Json(new { car_id = id, balance = service.ShowCarBalance(id) });
+        }
+
+                
     }
 }

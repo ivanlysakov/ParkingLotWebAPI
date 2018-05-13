@@ -24,7 +24,7 @@ namespace ParkingClassLibrary
 
         public static ParkingService Instance { get { return lazy.Value; } }
 
-        private ParkingService()
+        public ParkingService()
         {
             this.Cars = new List<Car>();
             this.Trans = new List<Transaction>();
@@ -65,13 +65,12 @@ namespace ParkingClassLibrary
 
 
         //добавить авто на парковку
-        public void AddCar(Car.CarTypes cartype)
+        public void AddCar(Car _car)
         {
 
             if (ParkingSpace >= 1)
             {
-                Car car = new Car(15, cartype);
-                Cars.Add(car);
+                Cars.Add(_car);
                 ParkingSpace--;
             }
 
@@ -242,27 +241,19 @@ namespace ParkingClassLibrary
 
         }
         //баланс авто
-        public void ShowCarBalance()
+        public int  ShowCarBalance( int car_ID)
 
         {
-
-            Console.Clear();
-            Console.WriteLine("Який номер вашого авто [1,2,3...]?");
-
             try
             {
-                int userChoice = Int32.Parse(Console.ReadLine());
-                Car _Car = Cars.Find(x => x.ID == userChoice);
-                Console.Clear();
-                Console.WriteLine("Баланс Вашого авто {0} грн. ", _Car.Balance.ToString());
+                Car _car = Cars.Find(x => x.ID == car_ID);
+                return _car.Balance;
 
             }
             catch
 
             {
-                Console.WriteLine("На жаль, таке авто у нас не припарковане");
-                Console.WriteLine("Натисніть будь-яку клавішу...");
-                Console.ReadLine();
+                throw;
             }
 
         }
