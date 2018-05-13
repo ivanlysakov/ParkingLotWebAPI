@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 namespace parkingSimulatorWebAPI.Controllers
 {
     [Produces("application/json")]
-   
     public class ParkingLotController : Controller
     {
         public ParkingService service { get; set; } = ParkingService.Instance;
@@ -28,8 +27,8 @@ namespace parkingSimulatorWebAPI.Controllers
             _logger.LogInformation("Index page says hello");
             return View();
         }
-                            
 
+        // GET: api/ParkingLot/ParkingFreeSpaces
         [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
         public JsonResult GetParkingFreeSpaces()
@@ -38,6 +37,7 @@ namespace parkingSimulatorWebAPI.Controllers
 
         }
 
+        // GET: api/ParkingLot/ParkingOccupiedSpaces
         [Route("api/[controller]/ParkingOccupiedSpaces")]
         [HttpGet]
         public JsonResult GetParkingOccupiedSpaces()
@@ -45,7 +45,6 @@ namespace parkingSimulatorWebAPI.Controllers
             return Json(new { occupied_spaces = service.Cars.Count });
         }
                
-
         // GET: api/ParkingLot/Balance
         [Route("api/[controller]/ParkingBalance")]
         [HttpGet]
@@ -54,35 +53,82 @@ namespace parkingSimulatorWebAPI.Controllers
             return Json(new { time = DateTime.Now.ToString("g"), parking_balance = service.ShowParkingBalance() });
         }
 
+
+
+        // GET: api/ParkingLot/ShowAllCars
+        [Route("api/[controller]/ShowAllCars")]
+        [HttpGet]
+        public JsonResult GetAllCars()
+        {
+            return Json(service.Cars);
+        }
+
         // POST: api/CarAdd
-        [Route("api/[controller]/AddCar")]
+        [Route("api/[controller]/AddCar/{type}/{balance}")]
         [HttpPost]
-        public JsonResult PostNewCar(string type, int balance )
+        public JsonResult PostNewCar(string type,  int balance )
         {
             try
             {
-                Car.CarTypes _type = (Car.CarTypes)Enum.Parse(typeof(Car.CarTypes), type);
-                Car car = new Car(balance, _type);
-                service.AddCar(car);
-                return Json(Ok());
+               Car.CarTypes _type = (Car.CarTypes)Enum.Parse(typeof(Car.CarTypes), type);
+               bool add =  service.AddCar(new Car(balance, _type));
+
+                if (add)
+                    return Json(new { ok = "Your car  was parked!" });
+                else
+                    return Json(new { error = "There are no places in our parkinglot. Sorry" });
             }
             catch 
             {
 
-                return Json(BadRequest());
+                return Json(new { error = "There is no such type of car. Repeat please" });
             }
             
             
         }
-        
-        // GET api/values/5
+
+        // GET api/ParkingLot/ShowCarBalance/{id}"
         [Route("api/[controller]/ShowCarBalance/{id}")]
         [HttpGet("{id}")]
         public JsonResult GetCarBalance(int id)
         {
-            return Json(new { car_id = id, balance = service.ShowCarBalance(id) });
+            try
+            {
+                return Json(new { car_id = id, balance = service.ShowCarBalance(id) });
+            }
+            catch 
+            {
+
+                return Json(new { error = "There is no car with ID {id}. Repeat please" });
+            }
+            
         }
 
-                
+        // DELETE: api/ParkingLot/RemoveCar
+        [Route("api/[controller]/DeleteCar/{id}")]
+        [HttpDelete("{id}")]
+        public JsonResult RemoveCar(int id)
+        {
+            try
+            {
+              
+                bool remove = service.RemoveCar(id);
+
+                if (remove)
+                    return Json(new { car_id = id, IsRemoved = "OK" });
+                else
+                    return Json(new { error = "You need to pay first. Sorry" });
+            }
+            catch
+            {
+
+                return Json(new { error = "There is no car with ID {id}. Repeat please" });
+            }
+
+
+        }
+
+
+
     }
 }

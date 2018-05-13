@@ -47,76 +47,47 @@ namespace ParkingClassLibrary
                 }
             }
 
-            //запускаем логирование транзакций каждую минуту
+            ////запускаем логирование транзакций каждую минуту
 
-            Thread logTimer = new Thread(new ThreadStart(InvokeMethod2));
-            logTimer.Start();
+            //Thread logTimer = new Thread(new ThreadStart(InvokeMethod2));
+            //logTimer.Start();
 
-            void InvokeMethod2()
-            {
-                while (true)
-                {
-                    WriteTransactionLog();
-                    Thread.Sleep(1000 * 60 * 1);
-                }
-            }
+            //void InvokeMethod2()
+            //{
+            //    while (true)
+            //    {
+            //        WriteTransactionLog();
+            //        Thread.Sleep(1000 * 60 * 1);
+            //    }
+            //}
 
         }
 
 
         //добавить авто на парковку
-        public void AddCar(Car _car)
+        public bool AddCar(Car _car)
         {
-
             if (ParkingSpace >= 1)
             {
                 Cars.Add(_car);
                 ParkingSpace--;
+                return true;
             }
-
-
+            return false;
         }
         //забрать авто с парковки
-        public void RemoveCar()
-
-        {
-            Console.Clear();
-            Console.WriteLine("Авто наявні на парковці");
-            Console.WriteLine("=============================");
-            Console.WriteLine("id    баланс грн   тип авто");
-            foreach (var car in Cars)
+        public bool RemoveCar(int id)
+        { 
+            Car removeCar = Cars.Find(x => x.ID == id);
+            if (removeCar.Balance > 0)
             {
-                Console.WriteLine("{0}     {1} грн      {2}", car.ID, car.Balance, car.TypeofCar);
+                Cars.Remove(removeCar);
+                ParkingSpace++;
+                return true;
             }
-            Console.WriteLine("=============================");
-
-
-
-            Console.WriteLine("Який номер вашого авто [1,2,3...]?");
-
-            try
-            {
-                int userChoice = Int32.Parse(Console.ReadLine());
-                Car removeCar = Cars.Find(x => x.ID == userChoice);
-                if (removeCar.Balance > 0)
-                {
-                    Cars.Remove(removeCar);
-                    ParkingSpace++;
-                }
-                else
-                {
-                    Console.WriteLine("Ви не можете забрати Ваше авто через брак коштів на балансі!");
-                    Console.WriteLine("Спочатку поповніть баланс Вашого авто і повторіть спробу)");
-
-                }
-            }
-            catch
-
-            {
-                Console.WriteLine("Такого авто немає в списку");
-            }
-
-
+            else 
+                return false;
+            
         }
         //списание средств
         public void WithdrawTransaction()
@@ -241,20 +212,12 @@ namespace ParkingClassLibrary
 
         }
         //баланс авто
-        public int  ShowCarBalance( int car_ID)
+        public int ShowCarBalance(int car_ID)
 
         {
-            try
-            {
-                Car _car = Cars.Find(x => x.ID == car_ID);
-                return _car.Balance;
-
-            }
-            catch
-
-            {
-                throw;
-            }
+            Car _car = Cars.Find(x => x.ID == car_ID);
+            return _car.Balance;
+                     
 
         }
         //пополняем баланс авто
