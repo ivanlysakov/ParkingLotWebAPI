@@ -1,30 +1,28 @@
-# ParkingLotWebAPI
+﻿# ParkingLotWebAPI
 
 Academy'18 • 2nd stage • 3. .NET Core
 На основі домашньої роботи №2 необхідно реалізувати ASP.NET Core Web API додаток (не потрібно розробляти графічний інтерфейс).
 
-Доступ до всього функціоналу повинен бути реалізований за допомогою WebAPI і кожен метод буде повертати JSON об’єкти. Для тестування роботи додатка можна скористатися наступними тулзами: Postman (https://www.getpostman.com/) або Fiddler (https://www.telerik.com/fiddler)
+Для тестування роботи додатка можна скористатися наступними тулзами: Postman (https://www.getpostman.com/) або Fiddler (https://www.telerik.com/fiddler)
 
-Solution повинен містити два проекти:
-* ASP.NET Core з відкритим REST API
-
-* Class Library який буде містити всю логіку для роботи з парковкою
 
 __REST API:__
 
-__Cars__
-* Список всіх машин (GET)
-* Деталі по одній машині (GET)
-* Видалити машину (DELETE)
-* Додати машину (POST)
 
 __Parking__
-* Кількість вільних місць (GET)
-* Кількість зайнятих місць (GET)
-* Загальний дохід (GET)
+* Кількість вільних місць (GET) - api/ParkingLot/ParkingFreeSpaces
+* Кількість зайнятих місць (GET) - api/ParkingLot/ParkingOccupiedSpaces
+* Загальний дохід (GET) - api/ParkingLot/Balance
+
+__Cars__
+* Список всіх машин (GET) - api/ParkingLot/ShowAllCars
+* Деталі по одній машині (GET) - api/ParkingLot/ShowCarDetails/{id}
+* Видалити машину (DELETE) - api/ParkingLot/RemoveCar/{id}
+* Додати машину (POST) api/AddCar/{type}/{id} 
+_type - (тип string) Passanger, Truck, Bus or Moto_
 
 __Transactions__
-* Вивести Transactions.log (GET)
-* Вивести транзакції за останню хвилину (GET)
-* Вивести транзакції за останню хвилину по одній конкретній машині (GET)
-* Поповнити баланс машини (PUT)
+* Вивести Transactions.log (GET) - api/ParkingLot/ReadTransactionLog
+* Вивести транзакції за останню хвилину (GET) - api/ParkingLot/LastMinuteTransactions
+* Вивести транзакції за останню хвилину по одній конкретній машині (GET) - api/ParkingLot/CarTransactionLastMinute/{id}
+* Поповнити баланс машини (PUT) - api/ParkingLot/RefillCarBalance/{id}/{sum}
