@@ -38,7 +38,7 @@ __Transactions__
 | URL | Description |
 | --- | --- |
 | http://localhost:59687/api/ParkingLot/ReadTransactionLog| Вивести Transactions.log (GET) |
-| http://localhost:59687/api/ParkingLot/LastMinuteTransactions | Вивести транзакції за останню хвилину (GET) |
-| http://localhost:59687/api/ParkingLot/CarTransactionLastMinute/{id} | Вивести транзакції за останню хвилину по одній конкретній машині (GET) |
+| http://localhost:59687/api/ParkingLot/LastMinuteTransactions | Транзакції за останню хвилину (GET) |
+| http://localhost:59687/api/ParkingLot/CarTransactionLastMinute/{id} | Транзакції за останню хвилину по одній конкретній машині (GET) |
 
 
