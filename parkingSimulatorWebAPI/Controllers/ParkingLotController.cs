@@ -35,7 +35,7 @@ namespace parkingSimulatorWebAPI.Controllers
             return Json(new {message = "Academy'18 • 2nd stage • 3. NET Core Web API (ParkingSimulator)"});
         }
 
-                // GET: api/ParkingLot/ParkingFreeSpaces
+        // GET: api/ParkingLot/ParkingFreeSpaces
         [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
         public JsonResult GetParkingFreeSpaces()
@@ -50,8 +50,8 @@ namespace parkingSimulatorWebAPI.Controllers
         {
             return Json(new { occupied_spaces = ParkingLotService.Cars.Count });
         }
-               
-        // GET: api/ParkingLot/Balance
+
+        // GET: api/ParkingLot/ParkingBalance
         [Route("api/[controller]/ParkingBalance")]
         [HttpGet]
         public JsonResult GetParkingBalance()
@@ -102,7 +102,6 @@ namespace parkingSimulatorWebAPI.Controllers
                 return Json(new { error = "There is no car with this ID. Repeat please" });
             }
 
-
         }
         
         // POST: api/CarAdd
@@ -124,7 +123,6 @@ namespace parkingSimulatorWebAPI.Controllers
             {
                 return Json(new { error = "There is no such type of car. Repeat please" });
             }
-            
             
         }
         
