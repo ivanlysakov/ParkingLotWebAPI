@@ -64,7 +64,10 @@ namespace parkingSimulatorWebAPI.Controllers
         [HttpGet]
         public JsonResult ShowAllCars()
         {
-            return Json(ParkingLotService.Cars);
+            if (ParkingLotService.Cars.Count > 0)
+                return Json(ParkingLotService.Cars);
+            else 
+                return Json(new { message = "ParkingLot is empty!" });
         }
 
         // GET api/ParkingLot/ShowCarDetails/{id}
