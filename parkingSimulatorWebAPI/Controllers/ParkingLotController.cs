@@ -73,7 +73,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // GET api/ParkingLot/ShowCarDetails/{id}
         [Route("api/[controller]/ShowCarDetails/{id}")]
         [HttpGet]
-        public JsonResult GetCar(int id)
+        public JsonResult GetCar(Guid id)
         {
             var car = ParkingLotService.Cars.Find(x => x.ID == id);
             
@@ -86,7 +86,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // DELETE: api/ParkingLot/RemoveCar/{id}
         [Route("api/[controller]/RemoveCar/{id}")]
         [HttpDelete]
-        public JsonResult RemoveCar(int id)
+        public JsonResult RemoveCar(Guid id)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // GET api/ParkingLot/CarTransactionLastMinute/{id}
         [Route("api/[controller]/CarTransactionLastMinute/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetCarTransactionLastMinute(int id)
+        public JsonResult GetCarTransactionLastMinute(Guid id)
         {
             var transactions = ParkingLotService.TransactionLastMinute().Where(r => r.CarID == id);
 
@@ -167,7 +167,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // PUT api/ParkingLot/RefillCarBalance/{id}/{sum}
         [Route("api/[controller]/RefillCarBalance/{id}/{sum}")]
         [HttpPut]
-        public JsonResult RefillCarBalance(int id, int sum)
+        public JsonResult RefillCarBalance(Guid id, int sum)
         {
             try
             {

@@ -79,7 +79,7 @@ namespace ParkingClassLibrary
             return false;
         }
         //забрать авто с парковки
-        public bool RemoveCar(int id)
+        public bool RemoveCar(Guid id)
         { 
             var removedCar = Cars.Find(x => x.ID == id);
             if (removedCar.Balance > 0)
@@ -201,7 +201,7 @@ namespace ParkingClassLibrary
             return line;
         }
         //баланс авто
-        public int ShowCarBalance(int car_ID)
+        public int ShowCarBalance(Guid car_ID)
 
         {
             var car = Cars.Find(x => x.ID == car_ID);
@@ -209,7 +209,7 @@ namespace ParkingClassLibrary
              
         }
         //пополняем баланс авто
-        public Car RefillCarBalance(int id, int sum)
+        public Car RefillCarBalance(Guid id, int sum)
 
         {
           var _car = Cars.Find(x => x.ID == id);
