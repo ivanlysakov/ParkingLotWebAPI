@@ -10,20 +10,35 @@ __REST API:__
 
 
 __Parking__
-* Кількість вільних місць (GET) - api/ParkingLot/ParkingFreeSpaces
-* Кількість зайнятих місць (GET) - api/ParkingLot/ParkingOccupiedSpaces
-* Загальний дохід (GET) - api/ParkingLot/ParkingBalance
+
+
+| URL | Description |
+| --- | --- |
+| http://localhost:59687/api/ParkingLot/ParkingFreeSpaces | Кількість вільних місць (GET) |
+| http://localhost:59687/api/ParkingLot/ParkingOccupiedSpaces | Кількість зайнятих місць (GET) |
+| http://localhost:59687/api/ParkingLot/ParkingBalance | Загальний дохід (GET) |
+
+
 
 __Cars__
-* Список всіх машин (GET) - api/ParkingLot/ShowAllCars
-* Деталі по одній машині (GET) - api/ParkingLot/ShowCarDetails/{id}
-* Видалити машину (DELETE) - api/ParkingLot/RemoveCar/{id}
-* Додати машину (POST) api/AddCar/{type}/{id}
 
- _type (тип string)_ Passanger, Truck, Bus or Moto
-* Поповнити баланс машини (PUT) - api/ParkingLot/RefillCarBalance/{id}/{sum}
+| URL | Description |
+| --- | --- |
+| http://localhost:59687/api/ParkingLot/ShowAllCars | Список всіх машин (GET) |
+| http://localhost:59687/api/ParkingLot/ShowCarDetails/{id} | Деталі по одній машині (GET) |
+| http://localhost:59687/api/ParkingLot/RemoveCar/{id} | Видалити машину (DELETE) |
+| http://localhost:59687/api/AddCar/{type}/{id} | Додати машину (POST) |
+| http://localhost:59687/api/ParkingLot/RefillCarBalance/{id}/{sum} | Поповнити баланс машини (PUT) |
+
+
 
 __Transactions__
-* Вивести Transactions.log (GET) - api/ParkingLot/ReadTransactionLog
-* Вивести транзакції за останню хвилину (GET) - api/ParkingLot/LastMinuteTransactions
-* Вивести транзакції за останню хвилину по одній конкретній машині (GET) - api/ParkingLot/CarTransactionLastMinute/{id}
+
+
+| URL | Description |
+| --- | --- |
+| http://localhost:59687/api/ParkingLot/ReadTransactionLog| Вивести Transactions.log (GET) |
+| http://localhost:59687/api/ParkingLot/LastMinuteTransactions | Вивести транзакції за останню хвилину (GET) |
+| http://localhost:59687/api/ParkingLot/CarTransactionLastMinute/{id} | Вивести транзакції за останню хвилину по одній конкретній машині (GET) |
+
+
