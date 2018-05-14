@@ -1,13 +1,7 @@
 ﻿# ParkingLotWebAPI
 
 Academy'18 • 2nd stage • 3. .NET Core
-На основі домашньої роботи №2 необхідно реалізувати ASP.NET Core Web API додаток (не потрібно розробляти графічний інтерфейс).
-
-Для тестування роботи додатка можна скористатися наступними тулзами: Postman (https://www.getpostman.com/) або Fiddler (https://www.telerik.com/fiddler)
-
-
-__REST API:__
-
+На основі домашньої роботи №2 реалізовано ASP.NET Core Web API додаток.
 
 __Parking__
 
