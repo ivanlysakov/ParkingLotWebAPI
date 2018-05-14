@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 
 
@@ -24,6 +26,8 @@ namespace ParkingClassLibrary
 
         public static ParkingService Instance { get { return lazy.Value; } }
 
+        private static readonly ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
+        
         public ParkingService()
         {
             this.Cars = new List<Car>();
@@ -47,23 +51,22 @@ namespace ParkingClassLibrary
                 }
             }
 
-            ////запускаем логирование транзакций каждую минуту
+            //запускаем логирование транзакций каждую минуту
 
-            //Thread logTimer = new Thread(new ThreadStart(InvokeMethod2));
-            //logTimer.Start();
+            Thread logTimer = new Thread(new ThreadStart(InvokeMethod2));
+            logTimer.Start();
 
-            //void InvokeMethod2()
-            //{
-            //    while (true)
-            //    {
-            //        WriteTransactionLog();
-            //        Thread.Sleep(1000 * 60 * 1);
-            //    }
-            //}
+            void InvokeMethod2()
+            {
+                while (true)
+                {
+                    WriteTransactionLog();
+                    Thread.Sleep(1000 * 60 * 1);
+                }
+            }
 
         }
-
-
+        
         //добавить авто на парковку
         public bool AddCar(Car _car)
         {
@@ -78,10 +81,10 @@ namespace ParkingClassLibrary
         //забрать авто с парковки
         public bool RemoveCar(int id)
         { 
-            Car removeCar = Cars.Find(x => x.ID == id);
-            if (removeCar.Balance > 0)
+            var removedCar = Cars.Find(x => x.ID == id);
+            if (removedCar.Balance > 0)
             {
-                Cars.Remove(removeCar);
+                Cars.Remove(removedCar);
                 ParkingSpace++;
                 return true;
             }
@@ -98,7 +101,7 @@ namespace ParkingClassLibrary
             {
                 foreach (var car in Cars)
                 {
-                    int tarif = 0;
+                    var tarif = 0;
                     switch (car.TypeofCar)
                     {
                         case Car.CarTypes.Passanger:
@@ -124,37 +127,25 @@ namespace ParkingClassLibrary
                     car.Balance = car.Balance - tarif;
                     ParkingBalance = ParkingBalance + tarif;
 
-                    Transaction transaction = new Transaction(DateTime.Now, car.ID, tarif);
+                    var transaction = new Transaction(DateTime.Now, car.ID, tarif);
                     Trans.Add(transaction);
                 }
             }
 
         }
         //транзакции за последнюю минуту
-        public void TransactionLastMinute()
+        public IEnumerable<Transaction> TransactionLastMinute()
 
         {
-            Console.Clear();
+            var query = Trans
+                .Where(r => r.TimeOfTransaction > DateTime.Now - TimeSpan.FromMinutes(1));
+            return (IEnumerable<Transaction>)query;
 
-            foreach (var tr in Trans)
-            {
-
-                if (tr.TimeOfTransaction > (DateTime.Now - TimeSpan.FromMinutes(1)))
-                {
-                    Console.WriteLine(" {0} з авто № {1} {2} списано {3} грн", tr.TransactionID, tr.CarID, tr.TimeOfTransaction, tr.TransactionAmount);
-                }
-                else
-                {
-
-                }
-
-            }
         }
         //пишем сумму транзакций в файл
         public void WriteTransactionLog()
-
         {
-
+            
             var sum = 0;
 
             foreach (var tr in Trans)
@@ -165,92 +156,65 @@ namespace ParkingClassLibrary
                 }
 
             }
+            
+            var log = string.Format("{0} Сума транзакцій за останню хвилину = {1} грн", DateTime.Now, sum);
+            var path = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName;
+            var fileName = Path.Combine(path, "Transaction.log");
 
-            string log = string.Format("{0} Сума транзакцій за останню хвилину = {1} грн", DateTime.Now, sum);
-
-            string path = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName;
-            string fileName = Path.Combine(path, "test.txt");
-
-            using (System.IO.StreamWriter file =
-                            new System.IO.StreamWriter(fileName))
+            _readWriteLock.EnterWriteLock();
+            try
             {
-                file.WriteLine(log);
+                using (var file = new System.IO.StreamWriter(fileName))
+                   {
+                        file.WriteLine(log);
+                   }
             }
-
-
-        }
+            finally
+            {
+                _readWriteLock.ExitWriteLock();
+            }
+        } 
         //читаем лог
-        public void ReadTransactionLog()
+        public string[] ReadTransactionLog()
 
         {
             string path = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName;
-            string fileName = Path.Combine(path, "test.txt");
-            string[] lines = new string[] { };
+            string fileName = Path.Combine(path, "Transaction.log");
+            string[] line = new string[] { };
 
             var workCompleted = false;
 
-            //если в файл пишет логер, то ждем 10 секунд 
+            //если в файл пишет логер, то ждем 5 секунд 
             while (!workCompleted)
             {
                 try
                 {
-                    lines = System.IO.File.ReadAllLines(fileName);
+                    line = File.ReadAllLines(fileName);
                     workCompleted = true;
                 }
                 catch (Exception)
                 {
-                    Thread.Sleep(10000);
+                    Thread.Sleep(5000);
                 }
             }
 
-            Console.Clear();
-            Console.WriteLine("Лог транзакцій за останню хвилину");
-            foreach (string line in lines)
-            {
-                Console.WriteLine("\t" + line);
-            }
-
+            return line;
         }
         //баланс авто
         public int ShowCarBalance(int car_ID)
 
         {
-            Car _car = Cars.Find(x => x.ID == car_ID);
-            return _car.Balance;
-                     
-
+            var car = Cars.Find(x => x.ID == car_ID);
+            return car.Balance;
+             
         }
         //пополняем баланс авто
-        public void RefillCarBalance()
+        public Car RefillCarBalance(int id, int sum)
 
         {
-
-            Console.Clear();
-            Console.WriteLine("Який номер вашого авто [1,2,3...]?");
-
-            try
-            {
-                int userChoice = Int32.Parse(Console.ReadLine());
-                Car _Car = Cars.Find(x => x.ID == userChoice);
-
-                Console.WriteLine("Введіть суму поповнення:");
-                int refillSum = Int32.Parse(Console.ReadLine());
-
-                _Car.Balance += refillSum;
-                Console.Clear();
-
-                Console.WriteLine("Внесено {0} грн. ", refillSum.ToString());
-                Console.WriteLine("Баланс Вашого авто {0} грн. ", _Car.Balance.ToString());
-
-            }
-            catch
-
-            {
-                Console.WriteLine("На жаль, таке авто у нас не припарковане");
-                Console.WriteLine("Натисніть будь-яку клавішу...");
-                Console.ReadLine();
-            }
-
+          var _car = Cars.Find(x => x.ID == id);
+          _car.Balance += sum;
+          return _car;
         }
         //баланс парковки
         public int ShowParkingBalance()
