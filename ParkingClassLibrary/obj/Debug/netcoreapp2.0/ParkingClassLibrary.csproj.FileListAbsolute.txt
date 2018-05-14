@@ -19,3 +19,15 @@ C:\Users\beekeeper\Documents\GitHub\1\ParkingLotWebAPI\ParkingClassLibrary\obj\D
 C:\Users\beekeeper\Documents\GitHub\1\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.csproj.CopyComplete
 C:\Users\beekeeper\Documents\GitHub\1\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.dll
 C:\Users\beekeeper\Documents\GitHub\1\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.pdb
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\bin\Debug\netcoreapp2.0\ParkingClassLibrary.deps.json
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\bin\Debug\netcoreapp2.0\ParkingClassLibrary.dll
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\bin\Debug\netcoreapp2.0\ParkingClassLibrary.pdb
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\bin\Debug\netcoreapp2.0\Newtonsoft.Json.dll
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\bin\Debug\netcoreapp2.0\Newtonsoft.Json.xml
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.csprojResolveAssemblyReference.cache
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.AssemblyInfoInputs.cache
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.AssemblyInfo.cs
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.csproj.CopyComplete
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.dll
+C:\Users\beekeeper\Documents\GitHub\ParkingLotWebAPI\ParkingClassLibrary\obj\Debug\netcoreapp2.0\ParkingClassLibrary.pdb

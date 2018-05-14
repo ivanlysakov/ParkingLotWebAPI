@@ -99,7 +99,7 @@ namespace parkingSimulatorWebAPI.Controllers
             }
             catch
             {
-                return Json(new { error = "There is no car with ID {id}. Repeat please" });
+                return Json(new { error = "There is no car with this ID. Repeat please" });
             }
 
 
@@ -116,7 +116,7 @@ namespace parkingSimulatorWebAPI.Controllers
                 bool add =  ParkingLotService.AddCar(new Car(balance, cartype));
 
                 if (add)
-                    return Json(new { ok = "Your car  was parked with balance "+ balance +" !" });
+                    return Json(new { ok = "Your car was parked with balance " + balance + " !" });
                 else
                     return Json(new { error = "There are no places in our parkinglot. Sorry" });
             }
