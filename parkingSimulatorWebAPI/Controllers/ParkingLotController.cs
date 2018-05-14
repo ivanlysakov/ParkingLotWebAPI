@@ -28,13 +28,19 @@ namespace parkingSimulatorWebAPI.Controllers
             return View();
         }
         
-        // GET: api/ParkingLot/ParkingFreeSpaces
+        [Route("api/[controller]/Hello")]
+        [HttpGet]
+        public JsonResult Get()
+        {
+            return Json(new {message = "Academy'18 • 2nd stage • 3. NET Core Web API (ParkingSimulator)"});
+        }
+
+                // GET: api/ParkingLot/ParkingFreeSpaces
         [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
         public JsonResult GetParkingFreeSpaces()
         {
             return Json(new {free_spaces = ParkingLotService.ShowParkingSpace()});
-
         }
 
         // GET: api/ParkingLot/ParkingOccupiedSpaces
@@ -58,7 +64,10 @@ namespace parkingSimulatorWebAPI.Controllers
         [HttpGet]
         public JsonResult ShowAllCars()
         {
-            return Json(ParkingLotService.Cars);
+            if (ParkingLotService.Cars.Count > 0)
+                return Json(ParkingLotService.Cars);
+            else 
+                return Json(new { message = "ParkingLot is empty!" });
         }
 
         // GET api/ParkingLot/ShowCarDetails/{id}
@@ -66,17 +75,12 @@ namespace parkingSimulatorWebAPI.Controllers
         [HttpGet]
         public JsonResult GetCar(int id)
         {
-            try
-            {   
-                var car = ParkingLotService.Cars.Find(x => x.ID == id);
-                return Json(car);
-            }
-            catch 
-            {
-
-                return Json(new { error = "There is no car with ID "+ id });
-            }
+            var car = ParkingLotService.Cars.Find(x => x.ID == id);
             
+            if (car != null) 
+                return Json(car);
+            else 
+                return Json(new { error = "There is no car with ID "+ id });
         }
         
         // DELETE: api/ParkingLot/RemoveCar/{id}
@@ -86,8 +90,7 @@ namespace parkingSimulatorWebAPI.Controllers
         {
             try
             {
-              
-                bool remove = ParkingLotService.RemoveCar(id);
+              bool remove = ParkingLotService.RemoveCar(id);
 
                 if (remove)
                     return Json(new { car_id = id, IsRemoved = "OK" });
@@ -96,7 +99,6 @@ namespace parkingSimulatorWebAPI.Controllers
             }
             catch
             {
-
                 return Json(new { error = "There is no car with ID {id}. Repeat please" });
             }
 
@@ -139,7 +141,12 @@ namespace parkingSimulatorWebAPI.Controllers
         [HttpGet]
         public JsonResult ShowLastMinuteTransactions()
         {
-            return Json(ParkingLotService.TransactionLastMinute());
+            
+            if (ParkingLotService.TransactionLastMinute().Any())
+                return Json(ParkingLotService.TransactionLastMinute());
+           else
+                return Json(new { message = "There are no any transactions during the last minute"});
+           
         }
 
         // GET api/ParkingLot/CarTransactionLastMinute/{id}

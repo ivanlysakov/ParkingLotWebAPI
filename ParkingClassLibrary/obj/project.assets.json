@@ -670,11 +670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\beekeeper\\Documents\\GitHub\\parkingSimulatorWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj",
       "projectName": "ParkingClassLibrary",
-      "projectPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\parkingSimulatorWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj",
+      "projectPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj",
       "packagesPath": "C:\\Users\\beekeeper\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\parkingSimulatorWebAPI\\ParkingClassLibrary\\obj\\",
+      "outputPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\ParkingClassLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

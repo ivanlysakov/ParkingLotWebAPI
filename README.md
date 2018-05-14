@@ -12,7 +12,7 @@ __REST API:__
 __Parking__
 * Кількість вільних місць (GET) - api/ParkingLot/ParkingFreeSpaces
 * Кількість зайнятих місць (GET) - api/ParkingLot/ParkingOccupiedSpaces
-* Загальний дохід (GET) - api/ParkingLot/Balance
+* Загальний дохід (GET) - api/ParkingLot/ParkingBalance
 
 __Cars__
 * Список всіх машин (GET) - api/ParkingLot/ShowAllCars
@@ -20,9 +20,9 @@ __Cars__
 * Видалити машину (DELETE) - api/ParkingLot/RemoveCar/{id}
 * Додати машину (POST) api/AddCar/{type}/{id} 
 _type - (тип string) Passanger, Truck, Bus or Moto_
+* Поповнити баланс машини (PUT) - api/ParkingLot/RefillCarBalance/{id}/{sum}
 
 __Transactions__
 * Вивести Transactions.log (GET) - api/ParkingLot/ReadTransactionLog
 * Вивести транзакції за останню хвилину (GET) - api/ParkingLot/LastMinuteTransactions
 * Вивести транзакції за останню хвилину по одній конкретній машині (GET) - api/ParkingLot/CarTransactionLastMinute/{id}
-* Поповнити баланс машини (PUT) - api/ParkingLot/RefillCarBalance/{id}/{sum}

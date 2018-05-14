@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -14,7 +16,7 @@ namespace ParkingClassLibrary
         public static int globalCarID;
 
         //виды авто
-        [Flags]
+        [JsonConverter(typeof(StringEnumConverter))]
         public enum CarTypes
         {
             Undefined,
