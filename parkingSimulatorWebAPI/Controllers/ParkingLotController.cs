@@ -12,7 +12,7 @@ namespace parkingSimulatorWebAPI.Controllers
     [Produces("application/json")]
     public class ParkingLotController : Controller
     {
-        public ParkingService ParkingLotService { get; set; } = ParkingService.Instance;
+        public ParkingService ParkingLotService { get; set;}
         
         private readonly ILogger<ParkingLotController> _logger;
 
@@ -27,7 +27,7 @@ namespace parkingSimulatorWebAPI.Controllers
             _logger.LogInformation("Index page says hello");
             return View();
         }
-
+        
         // GET: api/ParkingLot/ParkingFreeSpaces
         [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
@@ -56,55 +56,32 @@ namespace parkingSimulatorWebAPI.Controllers
         // GET: api/ParkingLot/ShowAllCars
         [Route("api/[controller]/ShowAllCars")]
         [HttpGet]
-        public JsonResult GetAllCars()
+        public JsonResult ShowAllCars()
         {
             return Json(ParkingLotService.Cars);
         }
 
-        // POST: api/CarAdd
-        [Route("api/[controller]/AddCar/{type}/{balance}")]
-        [HttpPost]
-        public JsonResult PostNewCar(string type,  int balance )
+        // GET api/ParkingLot/ShowCarDetails/{id}
+        [Route("api/[controller]/ShowCarDetails/{id}")]
+        [HttpGet]
+        public JsonResult GetCar(int id)
         {
             try
-            {
-               var cartype = (Car.CarTypes)Enum.Parse(typeof(Car.CarTypes), type);
-               bool add =  ParkingLotService.AddCar(new Car(balance, cartype));
-
-                if (add)
-                    return Json(new { ok = "Your car  was parked!" });
-                else
-                    return Json(new { error = "There are no places in our parkinglot. Sorry" });
+            {   
+                var car = ParkingLotService.Cars.Find(x => x.ID == id);
+                return Json(car);
             }
             catch 
             {
 
-                return Json(new { error = "There is no such type of car. Repeat please" });
-            }
-            
-            
-        }
-
-        // GET api/ParkingLot/ShowCarBalance/{id}"
-        [Route("api/[controller]/ShowCarBalance/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetCarBalance(int id)
-        {
-            try
-            {
-                return Json(new { car_id = id, balance = ParkingLotService.ShowCarBalance(id) });
-            }
-            catch 
-            {
-
-                return Json(new { error = "There is no car with ID "+ id +". Repeat please" });
+                return Json(new { error = "There is no car with ID "+ id });
             }
             
         }
-
-        // DELETE: api/ParkingLot/RemoveCar
-        [Route("api/[controller]/DeleteCar/{id}")]
-        [HttpDelete("{id}")]
+        
+        // DELETE: api/ParkingLot/RemoveCar/{id}
+        [Route("api/[controller]/RemoveCar/{id}")]
+        [HttpDelete]
         public JsonResult RemoveCar(int id)
         {
             try
@@ -125,8 +102,31 @@ namespace parkingSimulatorWebAPI.Controllers
 
 
         }
+        
+        // POST: api/CarAdd
+        [Route("api/[controller]/AddCar/{type}/{balance}")]
+        [HttpPost]
+        public JsonResult AddCar(string type,  int balance )
+        {
+            try
+            {
+                var cartype = (Car.CarTypes)Enum.Parse(typeof(Car.CarTypes), type);
+                bool add =  ParkingLotService.AddCar(new Car(balance, cartype));
 
+                if (add)
+                    return Json(new { ok = "Your car  was parked!" });
+                else
+                    return Json(new { error = "There are no places in our parkinglot. Sorry" });
+            }
+            catch 
+            {
 
+                return Json(new { error = "There is no such type of car. Repeat please" });
+            }
+            
+            
+        }
+        
         // GET: api/ParkingLot/ReadTransactionLog
         [Route("api/[controller]/ReadTransactionLog")]
         [HttpGet]
@@ -134,8 +134,7 @@ namespace parkingSimulatorWebAPI.Controllers
         {
            return Json(ParkingLotService.ReadTransactionLog());
         }
-
-
+        
         // GET: api/ParkingLot/LastMinuteTransactions
         [Route("api/[controller]/LastMinuteTransactions")]
         [HttpGet]
@@ -144,7 +143,7 @@ namespace parkingSimulatorWebAPI.Controllers
             return Json(ParkingLotService.TransactionLastMinute());
         }
 
-        // GET api/ParkingLot/CarTransactionLasMinute/{id}"
+        // GET api/ParkingLot/CarTransactionLastMinute/{id}
         [Route("api/[controller]/CarTransactionLastMinute/{id}")]
         [HttpGet("{id}")]
         public JsonResult GetCarTransactionLastMinute(int id)
@@ -158,10 +157,8 @@ namespace parkingSimulatorWebAPI.Controllers
                 return Json(new { message = "There are no any transactions or car_ID is wrong."});
            
         }
-
-
-
-        // PUT api/ParkingLot/RefillCarBalance/{id}/{sum}"
+        
+        // PUT api/ParkingLot/RefillCarBalance/{id}/{sum}
         [Route("api/[controller]/RefillCarBalance/{id}/{sum}")]
         [HttpPut]
         public JsonResult RefillCarBalance(int id, int sum)
