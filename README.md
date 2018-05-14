@@ -18,8 +18,9 @@ __Cars__
 * Список всіх машин (GET) - api/ParkingLot/ShowAllCars
 * Деталі по одній машині (GET) - api/ParkingLot/ShowCarDetails/{id}
 * Видалити машину (DELETE) - api/ParkingLot/RemoveCar/{id}
-* Додати машину (POST) api/AddCar/{type}/{id} 
-_type - (тип string) Passanger, Truck, Bus or Moto_
+* Додати машину (POST) api/AddCar/{type}/{id}
+
+ _type (тип string)_ Passanger, Truck, Bus or Moto
 * Поповнити баланс машини (PUT) - api/ParkingLot/RefillCarBalance/{id}/{sum}
 
 __Transactions__
