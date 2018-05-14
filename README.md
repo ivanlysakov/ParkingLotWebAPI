@@ -21,7 +21,7 @@ __Cars__
 | http://localhost:59687/api/ParkingLot/ShowAllCars | Список всіх машин (GET) |
 | http://localhost:59687/api/ParkingLot/ShowCarDetails/{id} | Деталі по одній машині (GET) |
 | http://localhost:59687/api/ParkingLot/RemoveCar/{id} | Видалити машину (DELETE) |
-| http://localhost:59687/api/AddCar/{type}/{id} | Додати машину (POST) |
+| http://localhost:59687/api/ParkingLot/AddCar/{type}/{sum} | Додати машину (POST) |
 | http://localhost:59687/api/ParkingLot/RefillCarBalance/{id}/{sum} | Поповнити баланс машини (PUT) |
 
 
