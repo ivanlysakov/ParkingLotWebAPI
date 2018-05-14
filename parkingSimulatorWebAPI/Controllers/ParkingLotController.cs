@@ -28,13 +28,19 @@ namespace parkingSimulatorWebAPI.Controllers
             return View();
         }
         
-        // GET: api/ParkingLot/ParkingFreeSpaces
+        [Route("api/[controller]/Hello")]
+        [HttpGet]
+        public JsonResult Get()
+        {
+            return Json(new {message = "Academy'18 • 2nd stage • 3. NET Core Web API (ParkingSimulator)"});
+        }
+
+                // GET: api/ParkingLot/ParkingFreeSpaces
         [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
         public JsonResult GetParkingFreeSpaces()
         {
             return Json(new {free_spaces = ParkingLotService.ShowParkingSpace()});
-
         }
 
         // GET: api/ParkingLot/ParkingOccupiedSpaces
