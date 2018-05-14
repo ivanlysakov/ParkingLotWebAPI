@@ -13,13 +13,13 @@ namespace ParkingClassLibrary
         //Свойство Дата/Время Транзакции
         public DateTime TimeOfTransaction { get; set; }
         //Свойство Идентификатор машины
-        public int CarID { get; set; }
+        public Guid CarID { get; set; }
         //Свойство Списанные средства
-        public int TransactionAmount { get; set; }
+        public int TransactionAmount { get; set;}
 
         public static int globalTransactionID;
 
-        public Transaction(DateTime time, int id, int amount)
+        public Transaction(DateTime time, Guid id, int amount)
 
         {
             this.TransactionID = Interlocked.Increment(ref globalTransactionID);
