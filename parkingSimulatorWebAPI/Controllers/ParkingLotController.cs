@@ -35,7 +35,7 @@ namespace parkingSimulatorWebAPI.Controllers
             return Json(new {message = "Academy'18 • 2nd stage • 3. NET Core Web API (ParkingSimulator)"});
         }
 
-                // GET: api/ParkingLot/ParkingFreeSpaces
+        // GET: api/ParkingLot/ParkingFreeSpaces
         [Route("api/[controller]/ParkingFreeSpaces")]
         [HttpGet]
         public JsonResult GetParkingFreeSpaces()
@@ -50,8 +50,8 @@ namespace parkingSimulatorWebAPI.Controllers
         {
             return Json(new { occupied_spaces = ParkingLotService.Cars.Count });
         }
-               
-        // GET: api/ParkingLot/Balance
+
+        // GET: api/ParkingLot/ParkingBalance
         [Route("api/[controller]/ParkingBalance")]
         [HttpGet]
         public JsonResult GetParkingBalance()
@@ -73,7 +73,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // GET api/ParkingLot/ShowCarDetails/{id}
         [Route("api/[controller]/ShowCarDetails/{id}")]
         [HttpGet]
-        public JsonResult GetCar(int id)
+        public JsonResult GetCar(Guid id)
         {
             var car = ParkingLotService.Cars.Find(x => x.ID == id);
             
@@ -86,7 +86,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // DELETE: api/ParkingLot/RemoveCar/{id}
         [Route("api/[controller]/RemoveCar/{id}")]
         [HttpDelete]
-        public JsonResult RemoveCar(int id)
+        public JsonResult RemoveCar(Guid id)
         {
             try
             {
@@ -99,9 +99,8 @@ namespace parkingSimulatorWebAPI.Controllers
             }
             catch
             {
-                return Json(new { error = "There is no car with ID {id}. Repeat please" });
+                return Json(new { error = "There is no car with this ID. Repeat please" });
             }
-
 
         }
         
@@ -116,7 +115,7 @@ namespace parkingSimulatorWebAPI.Controllers
                 bool add =  ParkingLotService.AddCar(new Car(balance, cartype));
 
                 if (add)
-                    return Json(new { ok = "Your car  was parked with balance "+ balance +" !" });
+                    return Json(new { ok = "Your car was parked with balance " + balance + " !" });
                 else
                     return Json(new { error = "There are no places in our parkinglot. Sorry" });
             }
@@ -124,7 +123,6 @@ namespace parkingSimulatorWebAPI.Controllers
             {
                 return Json(new { error = "There is no such type of car. Repeat please" });
             }
-            
             
         }
         
@@ -152,7 +150,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // GET api/ParkingLot/CarTransactionLastMinute/{id}
         [Route("api/[controller]/CarTransactionLastMinute/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetCarTransactionLastMinute(int id)
+        public JsonResult GetCarTransactionLastMinute(Guid id)
         {
             var transactions = ParkingLotService.TransactionLastMinute().Where(r => r.CarID == id);
 
@@ -167,7 +165,7 @@ namespace parkingSimulatorWebAPI.Controllers
         // PUT api/ParkingLot/RefillCarBalance/{id}/{sum}
         [Route("api/[controller]/RefillCarBalance/{id}/{sum}")]
         [HttpPut]
-        public JsonResult RefillCarBalance(int id, int sum)
+        public JsonResult RefillCarBalance(Guid id, int sum)
         {
             try
             {

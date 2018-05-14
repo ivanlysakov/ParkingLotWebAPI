@@ -13301,11 +13301,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\parkingSimulatorWebAPI\\parkingSimulatorWebAPI.csproj",
+      "projectUniqueName": "C:\\Users\\beekeeper\\Documents\\GitHub\\ParkingLotWebAPI\\parkingSimulatorWebAPI\\parkingSimulatorWebAPI.csproj",
       "projectName": "parkingSimulatorWebAPI",
-      "projectPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\parkingSimulatorWebAPI\\parkingSimulatorWebAPI.csproj",
+      "projectPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\ParkingLotWebAPI\\parkingSimulatorWebAPI\\parkingSimulatorWebAPI.csproj",
       "packagesPath": "C:\\Users\\beekeeper\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\parkingSimulatorWebAPI\\obj\\",
+      "outputPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\ParkingLotWebAPI\\parkingSimulatorWebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13324,8 +13324,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj": {
-              "projectPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\1\\ParkingLotWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj"
+            "C:\\Users\\beekeeper\\Documents\\GitHub\\ParkingLotWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj": {
+              "projectPath": "C:\\Users\\beekeeper\\Documents\\GitHub\\ParkingLotWebAPI\\ParkingClassLibrary\\ParkingClassLibrary.csproj"
             }
           }
         }

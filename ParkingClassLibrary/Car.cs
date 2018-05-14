@@ -9,11 +9,12 @@ namespace ParkingClassLibrary
 {
     public class Car
     {
-        public int ID { set; get; } //Свойство идентификатор
+        public Guid ID { set; get; } //Свойство идентификатор
         public int Balance { set; get; }//Свойство баланс
         public CarTypes TypeofCar { set; get; } //Свойство тип машины
 
-        public static int globalCarID;
+      
+        
 
         //виды авто
         [JsonConverter(typeof(StringEnumConverter))]
@@ -29,7 +30,7 @@ namespace ParkingClassLibrary
         public Car(int balance, CarTypes type)
 
         {
-            this.ID = Interlocked.Increment(ref globalCarID);
+            this.ID = Guid.NewGuid();
             this.Balance = balance;
             this.TypeofCar = type;
             
