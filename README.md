@@ -12,7 +12,7 @@ __REST API:__
 __Parking__
 * Кількість вільних місць (GET) - api/ParkingLot/ParkingFreeSpaces
 * Кількість зайнятих місць (GET) - api/ParkingLot/ParkingOccupiedSpaces
-* Загальний дохід (GET) - api/ParkingLot/Balance
+* Загальний дохід (GET) - api/ParkingLot/ParkingBalance
 
 __Cars__
 * Список всіх машин (GET) - api/ParkingLot/ShowAllCars
