@@ -1,21 +1,16 @@
-﻿# ParkingLotWebAPI
+# ParkingLotWebAPI
 
 Academy'18 • 2nd stage • 3. .NET Core
 На основі домашньої роботи №2 реалізовано ASP.NET Core Web API додаток.
 
-__Parking__
-
-
+## Parking
 | URL | Description |
 | --- | --- |
 | http://localhost:59687/api/ParkingLot/ParkingFreeSpaces | Кількість вільних місць (GET) |
 | http://localhost:59687/api/ParkingLot/ParkingOccupiedSpaces | Кількість зайнятих місць (GET) |
 | http://localhost:59687/api/ParkingLot/ParkingBalance | Загальний дохід (GET) |
 
-
-
-__Cars__
-
+## Cars
 | URL | Description |
 | --- | --- |
 | http://localhost:59687/api/ParkingLot/ShowAllCars | Список всіх машин (GET) |
@@ -24,11 +19,7 @@ __Cars__
 | http://localhost:59687/api/ParkingLot/AddCar/{type}/{balance} | Додати машину (POST) |
 | http://localhost:59687/api/ParkingLot/RefillCarBalance/{id}/{sum} | Поповнити баланс машини (PUT) |
 
-
-
-__Transactions__
-
-
+## Transactions
 | URL | Description |
 | --- | --- |
 | http://localhost:59687/api/ParkingLot/ReadTransactionLog| Вивести Transactions.log (GET) |
