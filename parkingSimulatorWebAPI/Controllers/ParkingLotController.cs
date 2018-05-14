@@ -75,17 +75,12 @@ namespace parkingSimulatorWebAPI.Controllers
         [HttpGet]
         public JsonResult GetCar(int id)
         {
-            try
-            {   
-                var car = ParkingLotService.Cars.Find(x => x.ID == id);
-                return Json(car);
-            }
-            catch 
-            {
-
-                return Json(new { error = "There is no car with ID "+ id });
-            }
+            var car = ParkingLotService.Cars.Find(x => x.ID == id);
             
+            if (car != null) 
+                return Json(car);
+            else 
+                return Json(new { error = "There is no car with ID "+ id });
         }
         
         // DELETE: api/ParkingLot/RemoveCar/{id}
@@ -95,8 +90,7 @@ namespace parkingSimulatorWebAPI.Controllers
         {
             try
             {
-              
-                bool remove = ParkingLotService.RemoveCar(id);
+              bool remove = ParkingLotService.RemoveCar(id);
 
                 if (remove)
                     return Json(new { car_id = id, IsRemoved = "OK" });
@@ -105,7 +99,6 @@ namespace parkingSimulatorWebAPI.Controllers
             }
             catch
             {
-
                 return Json(new { error = "There is no car with ID {id}. Repeat please" });
             }
 
@@ -148,7 +141,12 @@ namespace parkingSimulatorWebAPI.Controllers
         [HttpGet]
         public JsonResult ShowLastMinuteTransactions()
         {
-            return Json(ParkingLotService.TransactionLastMinute());
+            
+            if (ParkingLotService.TransactionLastMinute().Any())
+                return Json(ParkingLotService.TransactionLastMinute());
+           else
+                return Json(new { message = "There are no any transactions during the last minute"});
+           
         }
 
         // GET api/ParkingLot/CarTransactionLastMinute/{id}
