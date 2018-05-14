@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("parkingSimulatorWebAPI")]
 
@@ -22,12 +22,17 @@ namespace ParkingClassLibrary
         public Dictionary<Car.CarTypes, int> Tarif { get; }//тарифы
         public int ParkingSpace { get; set; }//количество мест
 
-        public static readonly Lazy<ParkingService> lazy = new Lazy<ParkingService>(() => new ParkingService());
 
-        public static ParkingService Instance { get { return lazy.Value; } }
+
+        /// <summary>
+        /// я так понял что, прописав в Startup.cs services.AddSingleton<ParkingService>(), 
+        /// мы объявляем Singelton и последуующий код можна закомментить. Надеюсь я не ошибся. Вроде все работает)
+        /// </summary>
+        //public static readonly Lazy<ParkingService> lazy = new Lazy<ParkingService>(() => new ParkingService());
+        //public static ParkingService Instance { get { return lazy.Value; } }
 
         private static readonly ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
-        
+                
         public ParkingService()
         {
             this.Cars = new List<Car>();
@@ -37,66 +42,19 @@ namespace ParkingClassLibrary
             this.ParkingSpace = Settings.ParkingSpace;
             this.Fine = Settings.Fine;
 
-            //запускаем списание средств каждые 3 минуты
+            //запускаем списание средств каждые 3 минуты и запись в лог каждую минуту
+            Task.Run(() => WithdrawTransaction(1000 * 60 * TimeOut));
+            Task.Run(() => WriteTransactionLog(1000 * 30 * 1));
 
-            Thread transactionTimer = new Thread(new ThreadStart(InvokeMethod1));
-            transactionTimer.Start();
-
-            void InvokeMethod1()
-            {
-                while (true)
-                {
-                    WithdrawTransaction();
-                    Thread.Sleep(1000 * 60 * TimeOut);
-                }
-            }
-
-            //запускаем логирование транзакций каждую минуту
-
-            Thread logTimer = new Thread(new ThreadStart(InvokeMethod2));
-            logTimer.Start();
-
-            void InvokeMethod2()
-            {
-                while (true)
-                {
-                    WriteTransactionLog();
-                    Thread.Sleep(1000 * 60 * 1);
-                }
-            }
-
-        }
-        
-        //добавить авто на парковку
-        public bool AddCar(Car _car)
-        {
-            if (ParkingSpace >= 1)
-            {
-                Cars.Add(_car);
-                ParkingSpace--;
-                return true;
-            }
-            return false;
-        }
-        //забрать авто с парковки
-        public bool RemoveCar(Guid id)
-        { 
-            var removedCar = Cars.Find(x => x.ID == id);
-            if (removedCar.Balance > 0)
-            {
-                Cars.Remove(removedCar);
-                ParkingSpace++;
-                return true;
-            }
-            else 
-                return false;
-            
         }
         //списание средств
-        public void WithdrawTransaction()
+        public async void WithdrawTransaction(int delay)
 
         {
-            if (Cars.Count > 0)
+
+            while (true)
+            {
+                if (Cars.Count > 0)
 
             {
                 foreach (var car in Cars)
@@ -131,21 +89,18 @@ namespace ParkingClassLibrary
                     Trans.Add(transaction);
                 }
             }
-
-        }
-        //транзакции за последнюю минуту
-        public IEnumerable<Transaction> TransactionLastMinute()
-
-        {
-            var query = Trans
-                .Where(r => r.TimeOfTransaction > DateTime.Now - TimeSpan.FromMinutes(1));
-            return (IEnumerable<Transaction>)query;
-
+            
+            await Task.Delay(delay);
+            }
+            
+           
+        
         }
         //пишем сумму транзакций в файл
-        public void WriteTransactionLog()
+        public async void WriteTransactionLog(int delay)
         {
-            
+            while (true)
+            {
             var sum = 0;
 
             foreach (var tr in Trans)
@@ -157,23 +112,36 @@ namespace ParkingClassLibrary
 
             }
             
-            var log = string.Format("{0} Сума транзакцій за останню хвилину = {1} грн", DateTime.Now, sum);
-            var path = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName;
-            var fileName = Path.Combine(path, "Transaction.log");
+                var log = string.Format("{0} Сума транзакцій за останню хвилину = {1} грн", DateTime.Now, sum);
+                var path = Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName;
+                var fileName = Path.Combine(path, "Transaction.log");
 
-            _readWriteLock.EnterWriteLock();
-            try
-            {
-                using (var file = new System.IO.StreamWriter(fileName))
-                   {
-                        file.WriteLine(log);
-                   }
+                _readWriteLock.EnterWriteLock();
+                try
+                {
+                    using (var file = new System.IO.StreamWriter(fileName)) 
+                        {
+                            file.WriteLine(log);
+                        }
+                }
+                finally
+                {
+                    _readWriteLock.ExitWriteLock();
+                }
+            await Task.Delay(delay);
             }
-            finally
-            {
-                _readWriteLock.ExitWriteLock();
-            }
+            
+            
         } 
+        //транзакции за последнюю минуту
+        public IEnumerable<Transaction> TransactionLastMinute()
+
+        {
+            var query = Trans
+                .Where(r => r.TimeOfTransaction > DateTime.Now - TimeSpan.FromMinutes(1));
+            return (IEnumerable<Transaction>)query;
+
+        }
         //читаем лог
         public string[] ReadTransactionLog()
 
@@ -200,13 +168,31 @@ namespace ParkingClassLibrary
 
             return line;
         }
-        //баланс авто
-        public int ShowCarBalance(Guid car_ID)
-
+        
+        //добавить авто на парковку
+        public bool AddCar(Car _car)
         {
-            var car = Cars.Find(x => x.ID == car_ID);
-            return car.Balance;
-             
+            if (ParkingSpace >= 1)
+            {
+                Cars.Add(_car);
+                ParkingSpace--;
+                return true;
+            }
+            return false;
+        }
+        //забрать авто с парковки
+        public bool RemoveCar(Guid id)
+        { 
+            var removedCar = Cars.Find(x => x.ID == id);
+            if (removedCar.Balance > 0)
+            {
+                Cars.Remove(removedCar);
+                ParkingSpace++;
+                return true;
+            }
+            else 
+                return false;
+            
         }
         //пополняем баланс авто
         public Car RefillCarBalance(Guid id, int sum)
@@ -215,13 +201,22 @@ namespace ParkingClassLibrary
           var _car = Cars.Find(x => x.ID == id);
           _car.Balance += sum;
           return _car;
+        }   
+        //баланс авто
+        public int ShowCarBalance(Guid car_ID)
+
+        {
+            var car = Cars.Find(x => x.ID == car_ID);
+            return car.Balance;
+             
         }
+      
         //баланс парковки
         public int ShowParkingBalance()
         {
             return  ParkingBalance;
         }
-        //мета на парковке
+        //места на парковке
         public int ShowParkingSpace()
 
         {
