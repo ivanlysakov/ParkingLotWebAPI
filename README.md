@@ -1,7 +1,8 @@
 # ParkingLotWebAPI
 
 ## Academy'18 • 2nd stage • 3 Hometask
-### .NET Core - На основі домашньої роботи №2 реалізовано ASP.NET Core Web API додаток.
+
+.NET Core - На основі домашньої роботи №2 реалізовано ASP.NET Core Web API додаток.
 
 ## Parking
 | URL | Description |
